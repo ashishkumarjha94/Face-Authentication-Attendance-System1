@@ -14,7 +14,7 @@ class FaceEngine:
         faces = self.app.get(frame_bgr)
         if not faces:
             return None
-        # Choose largest bbox
+
         def area(f):
             x1, y1, x2, y2 = f.bbox
             return (x2 - x1) * (y2 - y1)
@@ -26,4 +26,5 @@ class FaceEngine:
             return None, None
         emb = face.embedding
         emb = l2_normalize(emb)
+
         return emb, face
