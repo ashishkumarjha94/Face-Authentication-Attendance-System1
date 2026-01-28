@@ -66,7 +66,7 @@ class Storage:
         now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         if row is None:
-            # Punch-in
+          
             cur.execute("""
             INSERT INTO attendance(user_id, day, punch_in, punch_out)
             VALUES(?,?,?,NULL)
@@ -76,11 +76,12 @@ class Storage:
 
         punch_in, punch_out = row
         if punch_in and not punch_out:
-            # Punch-out
+           
             cur.execute("""
             UPDATE attendance SET punch_out=? WHERE user_id=? AND day=?
             """, (now, user_id, today))
             self.conn.commit()
             return "PUNCH_OUT", now
+
 
         return "DONE_FOR_DAY", now
