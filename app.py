@@ -8,7 +8,7 @@ from storage import Storage
 from utils import cosine_similarity, enhance_lighting
 from liveness import LivenessChecker
 
-SIM_THRESHOLD_DEFAULT = 0.50  # tune per environment
+SIM_THRESHOLD_DEFAULT = 0.50  
 
 def draw_face_box(frame, face):
     if face is None:
@@ -118,7 +118,7 @@ def attend(cam_index: int, sim_threshold: float):
         draw_face_box(frame, face)
 
         if emb is not None:
-            # Find best match
+
             best = None
             for uid, name, uemb in users:
                 sim = cosine_similarity(emb, uemb)
@@ -135,7 +135,6 @@ def attend(cam_index: int, sim_threshold: float):
                     event, ts = db.mark_attendance(uid)
                     last_mark_time = now
                     status_line = f"{name}: {event} @ {ts} (sim={sim:.2f})"
-                    # reset liveness after a successful mark to prevent repeated marking
                     live.reset()
 
         cv2.putText(frame, "ATTENDANCE MODE", (10, 25), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,255,255), 2)
@@ -174,4 +173,5 @@ def main():
         attend(args.cam, args.threshold)
 
 if __name__ == "__main__":
+
     main()
